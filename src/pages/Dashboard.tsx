@@ -37,6 +37,9 @@ export default function Dashboard() {
     formState: { errors },
   } = useForm<RecipeForm>()
 
+  const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set())
+  const [favLoading, setFavLoading] = useState<string | null>(null)
+
   const [aiPrompt, setAiPrompt] = useState('')
   const [aiType, setAiType] = useState<'drink' | 'dessert' | 'general'>('drink')
   const [aiResults, setAiResults] = useState<any[]>([])
@@ -52,11 +55,13 @@ export default function Dashboard() {
   }, [user])
 
   const loadData = async () => {
-    const [catRes] = await Promise.all([
+    const [catRes, , favRes] = await Promise.all([
       api.get('/categories'),
       fetchRecipes(),
+      api.get('/favorites').catch(() => ({ data: [] })),
     ])
     setCategories(catRes.data)
+    setFavoritedIds(new Set(favRes.data.map((r: any) => r.id)))
   }
 
   const handleLogout = () => {
@@ -119,6 +124,21 @@ export default function Dashboard() {
     }
   }
 
+  const handleToggleFavorite = async (recipeId: string) => {
+    setFavLoading(recipeId)
+    try {
+      if (favoritedIds.has(recipeId)) {
+        await api.delete(`/favorites/${recipeId}`)
+        setFavoritedIds((prev) => { const next = new Set(prev); next.delete(recipeId); return next })
+      } else {
+        await api.post(`/favorites/${recipeId}`)
+        setFavoritedIds((prev) => new Set(prev).add(recipeId))
+      }
+    } catch { /* ignore */ } finally {
+      setFavLoading(null)
+    }
+  }
+
   const handleAiRecommend = async () => {
     if (!aiPrompt.trim()) return
     setAiLoading(true)
@@ -155,13 +175,18 @@ export default function Dashboard() {
 
   const addAiResultAsRecipe = async (item: any) => {
     if (!categories.length) return
+    const match = categories.find((c) => c.type === aiType)
+    if (!match) return
     try {
+      const imgRes = await api.get('/images/search', { params: { q: item.name } }).catch(() => null)
+      const imageUrl = imgRes?.data?.images?.[0]?.url || ''
       await api.post('/recipes', {
         name: item.name,
         description: item.description || '',
         ingredients: item.ingredients || [],
         instructions: item.instructions || '',
-        categoryId: categories[0].id,
+        imageUrl,
+        categoryId: match.id,
       })
       fetchRecipes()
       setAiResults([])
@@ -384,6 +409,17 @@ export default function Dashboard() {
                         {recipe.averageRating > 0 ? `★ ${recipe.averageRating.toFixed(1)}` : 'Sin rating'}
                       </td>
                       <td className="py-3 flex gap-2">
+                        <button
+                          onClick={() => handleToggleFavorite(recipe.id)}
+                          disabled={favLoading === recipe.id}
+                          className={`text-sm px-3 py-1 rounded-lg transition ${
+                            favoritedIds.has(recipe.id)
+                              ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                          }`}
+                        >
+                          {favoritedIds.has(recipe.id) ? '❤️' : '🤍'}
+                        </button>
                         <button
                           onClick={() => handleEdit(recipe)}
                           className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-200 transition"

@@ -30,11 +30,17 @@ async function seed() {
   const categories = await Category.bulkCreate([
     { name: 'Cócteles Clásicos', type: 'drink', description: 'Cócteles tradicionales y emblemáticos' },
     { name: 'Cócteles Sin Alcohol', type: 'drink', description: 'Bebidas mocktail y sin alcohol' },
+    { name: 'Cervezas Artesanales', type: 'drink', description: 'Cervezas de elaboración propia e importadas' },
     { name: 'Vinos y Licores', type: 'drink', description: 'Selección de vinos y licores' },
-    { name: 'Postres Fríos', type: 'dessert', description: 'Helados, mousses y postres fríos' },
+    { name: 'Bebidas Calientes', type: 'drink', description: 'Cafés, tés, chocolate caliente e infusiones' },
+    { name: 'Batidos y Smoothies', type: 'drink', description: 'Bebidas cremosas de frutas y lácteos' },
+    { name: 'Postres Fríos', type: 'dessert', description: 'Helados, mousses, cheesecakes y postres fríos' },
     { name: 'Postres Horneados', type: 'dessert', description: 'Tartas, pasteles y postres horneados' },
-    { name: 'Entradas y Snacks', type: 'general', description: 'Aperitivos y entradas' },
+    { name: 'Postres Argentinos', type: 'dessert', description: 'Dulce de leche, alfajores, vigilantes y criollos' },
+    { name: 'Entradas y Snacks', type: 'general', description: 'Aperitivos, tapas y entradas' },
+    { name: 'Ensaladas', type: 'general', description: 'Ensaladas frescas y completas' },
     { name: 'Platos Principales', type: 'general', description: 'Platos fuertes y principales' },
+    { name: 'Salsas y Acompañamientos', type: 'general', description: 'Guarniciones, salsas y dips' },
   ])
   console.log(pc.green('✓'), pc.bold(`${categories.length} categories created`))
 
@@ -46,7 +52,7 @@ async function seed() {
       instructions: 'Escarchar el borde del vaso con sal. En coctelera, mezclar tequila, jugo de limón y triple sec con hielo. Agitar 15 segundos. Servir en el vaso escarchado. Decorar con rodaja de limón.',
       categoryId: categories[0].id,
       userId: owner.id,
-      imageUrl: '',
+      imageUrl: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&h=300&fit=crop',
     },
     {
       name: 'Mojito Cubano',
@@ -55,16 +61,16 @@ async function seed() {
       instructions: 'En vaso alto, machacar suavemente menta con azúcar y jugo de lima. Agregar ron, llenar con hielo picado. Completar con agua con gas. Remover suavemente. Decorar con ramita de menta.',
       categoryId: categories[0].id,
       userId: owner.id,
-      imageUrl: '',
+      imageUrl: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&h=300&fit=crop',
     },
     {
       name: 'Tiramisú Clásico',
       description: 'Postre italiano tradicional con café y mascarpone',
       ingredients: ['500g Mascarpone', '4 Huevos', '100g Azúcar', '300ml Café fuerte', '200g Bizcochos de soletilla', 'Cacao en polvo'],
       instructions: 'Separar claras y yemas. Batir yemas con azúcar, agregar mascarpone. Montar claras a punto de nieve e incorporar. Remojar bizcochos en café. Capas alternas de bizcochos y crema. Refrigerar 6 horas. Espolvorear cacao.',
-      categoryId: categories[3].id,
+      categoryId: categories[6].id,
       userId: owner.id,
-      imageUrl: '',
+      imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
     },
   ])
   console.log(pc.green('✓'), pc.bold(`3 recipes created`))
