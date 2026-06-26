@@ -36,6 +36,7 @@ export default function RecipeDetail() {
   const [favLoading, setFavLoading] = useState(false)
   const [score, setScore] = useState(5)
   const [comment, setComment] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [ratingError, setRatingError] = useState('')
   const [ratingSuccess, setRatingSuccess] = useState('')
 
@@ -119,7 +120,18 @@ export default function RecipeDetail() {
             </div>
             <h1 className="text-xl font-bold tracking-tight">Sabores con IA</h1>
           </Link>
-          <nav className="flex gap-4">
+
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Menú"
+          >
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          </button>
+
+          <nav className="hidden md:flex gap-4">
             {user ? (
               <>
                 <Link to="/favorites" className="hover:text-amber-300 transition">❤️ Favoritos</Link>
@@ -130,6 +142,39 @@ export default function RecipeDetail() {
             )}
           </nav>
         </div>
+
+        {menuOpen && (
+          <div className="md:hidden border-t border-amber-700/50">
+            <div className="max-w-4xl mx-auto px-4 py-3 flex flex-col gap-2">
+              {user ? (
+                <>
+                  <Link
+                    to="/favorites"
+                    className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    ❤️ Favoritos
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Iniciar Sesión
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
@@ -137,9 +182,9 @@ export default function RecipeDetail() {
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {recipe.imageUrl ? (
-            <img src={recipe.imageUrl} alt={recipe.name} className="w-full h-64 object-cover" />
+            <img src={recipe.imageUrl} alt={recipe.name} className="w-full h-48 sm:h-64 object-cover" />
           ) : (
-            <div className="w-full h-64 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-7xl">
+            <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-7xl">
               🍸
             </div>
           )}

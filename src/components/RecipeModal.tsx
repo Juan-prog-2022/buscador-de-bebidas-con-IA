@@ -11,22 +11,22 @@ export default function RecipeModal() {
       onClick={closeModal}
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-2 sm:mx-0"
         onClick={(e) => e.stopPropagation()}
       >
         {modalRecipe.imageUrl ? (
           <img
             src={modalRecipe.imageUrl}
             alt={modalRecipe.name}
-            className="w-full h-56 object-cover rounded-t-2xl"
+            className="w-full h-48 sm:h-56 object-cover rounded-t-2xl"
           />
         ) : (
-          <div className="w-full h-56 bg-gradient-to-br from-amber-400 to-orange-500 rounded-t-2xl flex items-center justify-center text-6xl">
+          <div className="w-full h-48 sm:h-56 bg-gradient-to-br from-amber-400 to-orange-500 rounded-t-2xl flex items-center justify-center text-6xl">
             🍸
           </div>
         )}
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-amber-600 bg-amber-100 px-3 py-1 rounded-full">
               {modalRecipe.Category?.name}

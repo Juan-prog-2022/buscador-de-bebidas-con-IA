@@ -27,6 +27,7 @@ export default function Dashboard() {
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [formError, setFormError] = useState('')
 
   const {
@@ -211,7 +212,18 @@ export default function Dashboard() {
               <p className="text-xs text-amber-300 -mt-1">Dashboard</p>
             </div>
           </Link>
-          <div className="flex items-center gap-4">
+
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Menú"
+          >
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-6 h-0.5 bg-white transition ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          </button>
+
+          <div className="hidden md:flex items-center gap-4">
             <Link to="/favorites" className="hover:text-amber-300 transition text-sm">❤️ Favoritos</Link>
             <span className="text-sm">{user.name}</span>
             <button
@@ -222,6 +234,27 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
+
+        {menuOpen && (
+          <div className="md:hidden border-t border-amber-700/50">
+            <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-2">
+              <span className="px-4 py-1 text-xs text-amber-300">{user.name}</span>
+              <Link
+                to="/favorites"
+                className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition text-sm"
+                onClick={() => setMenuOpen(false)}
+              >
+                ❤️ Favoritos
+              </Link>
+              <button
+                onClick={() => { handleLogout(); setMenuOpen(false) }}
+                className="block w-full text-left px-4 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 transition text-sm"
+              >
+                Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
@@ -386,58 +419,105 @@ export default function Dashboard() {
           {recipes.length === 0 ? (
             <p className="text-gray-600">No hay recetas. ¡Crea la primera!</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="border-b text-gray-600 text-sm">
-                    <th className="pb-3 font-medium">Nombre</th>
-                    <th className="pb-3 font-medium">Categoría</th>
-                    <th className="pb-3 font-medium">Rating</th>
-                    <th className="pb-3 font-medium">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recipes.map((recipe: any) => (
-                    <tr key={recipe.id} className="border-b border-gray-100 hover:bg-amber-50">
-                      <td className="py-3">
-                        <Link to={`/recipes/${recipe.id}`} className="text-amber-700 hover:text-amber-500 font-medium">
+            <>
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-left">
+                  <thead>
+                    <tr className="border-b text-gray-600 text-sm">
+                      <th className="pb-3 font-medium">Nombre</th>
+                      <th className="pb-3 font-medium">Categoría</th>
+                      <th className="pb-3 font-medium">Rating</th>
+                      <th className="pb-3 font-medium">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recipes.map((recipe: any) => (
+                      <tr key={recipe.id} className="border-b border-gray-100 hover:bg-amber-50">
+                        <td className="py-3">
+                          <Link to={`/recipes/${recipe.id}`} className="text-amber-700 hover:text-amber-500 font-medium">
+                            {recipe.name}
+                          </Link>
+                        </td>
+                        <td className="py-3 text-gray-600">{recipe.Category?.name}</td>
+                        <td className="py-3 text-amber-600">
+                          {recipe.averageRating > 0 ? `★ ${recipe.averageRating.toFixed(1)}` : 'Sin rating'}
+                        </td>
+                        <td className="py-3">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleToggleFavorite(recipe.id)}
+                              disabled={favLoading === recipe.id}
+                              className={`text-sm px-3 py-1 rounded-lg transition ${
+                                favoritedIds.has(recipe.id)
+                                  ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                              }`}
+                            >
+                              {favoritedIds.has(recipe.id) ? '❤️' : '🤍'}
+                            </button>
+                            <button
+                              onClick={() => handleEdit(recipe)}
+                              className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-200 transition"
+                            >
+                              Editar
+                            </button>
+                            <button
+                              onClick={() => handleDelete(recipe.id)}
+                              className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-lg hover:bg-red-200 transition"
+                            >
+                              Eliminar
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="md:hidden space-y-3">
+                {recipes.map((recipe: any) => (
+                  <div key={recipe.id} className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <Link to={`/recipes/${recipe.id}`} className="text-amber-700 hover:text-amber-500 font-semibold">
                           {recipe.name}
                         </Link>
-                      </td>
-                      <td className="py-3 text-gray-600">{recipe.Category?.name}</td>
-                      <td className="py-3 text-amber-600">
+                        <p className="text-xs text-gray-500">{recipe.Category?.name}</p>
+                      </div>
+                      <span className="text-amber-600 text-xs">
                         {recipe.averageRating > 0 ? `★ ${recipe.averageRating.toFixed(1)}` : 'Sin rating'}
-                      </td>
-                      <td className="py-3 flex gap-2">
-                        <button
-                          onClick={() => handleToggleFavorite(recipe.id)}
-                          disabled={favLoading === recipe.id}
-                          className={`text-sm px-3 py-1 rounded-lg transition ${
-                            favoritedIds.has(recipe.id)
-                              ? 'bg-red-100 text-red-600 hover:bg-red-200'
-                              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                          }`}
-                        >
-                          {favoritedIds.has(recipe.id) ? '❤️' : '🤍'}
-                        </button>
-                        <button
-                          onClick={() => handleEdit(recipe)}
-                          className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-200 transition"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => handleDelete(recipe.id)}
-                          className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded-lg hover:bg-red-200 transition"
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleToggleFavorite(recipe.id)}
+                        disabled={favLoading === recipe.id}
+                        className={`flex-1 text-sm px-3 py-1.5 rounded-lg transition ${
+                          favoritedIds.has(recipe.id)
+                            ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                        }`}
+                      >
+                        {favoritedIds.has(recipe.id) ? '❤️' : '🤍'}
+                      </button>
+                      <button
+                        onClick={() => handleEdit(recipe)}
+                        className="flex-1 text-sm bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(recipe.id)}
+                        className="flex-1 text-sm bg-red-100 text-red-700 px-3 py-1.5 rounded-lg hover:bg-red-200 transition"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </section>
       </main>
