@@ -1,11 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-interface HeaderProps {
-  showDashboardLink?: boolean
-}
-
-export default function Header({ showDashboardLink }: HeaderProps) {
+export default function Header() {
   const { user } = useAuth()
 
   return (
