@@ -27,13 +27,13 @@ export default function Hero({
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
           {title}
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-amber-100 mb-8 drop-shadow max-w-2xl">
+        <p className="text-base sm:text-lg md:text-xl text-indigo-100 mb-8 drop-shadow max-w-2xl">
           {subtitle}
         </p>
         {showCta && (
           <Link
             to={ctaLink}
-            className="inline-block bg-amber-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-amber-500 transition shadow-lg"
+            className="inline-block bg-indigo-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-base sm:text-lg font-semibold hover:bg-indigo-500 transition shadow-lg"
           >
             {ctaText}
           </Link>

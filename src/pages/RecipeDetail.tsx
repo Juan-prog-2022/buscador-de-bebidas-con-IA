@@ -96,26 +96,26 @@ export default function RecipeDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 flex items-center justify-center">
-        <p className="text-amber-700">Cargando...</p>
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-gray-100 flex items-center justify-center">
+        <p className="text-indigo-700">Cargando...</p>
       </div>
     )
   }
 
   if (!recipe) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-gray-100 flex items-center justify-center">
         <p className="text-gray-600">Receta no encontrada</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100">
-      <header className="bg-gradient-to-r from-amber-900 to-amber-800 text-white shadow-lg">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-gray-100">
+      <header className="bg-gradient-to-r from-indigo-900 to-indigo-800 text-white shadow-lg">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
+            <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
               🍸
             </div>
             <h1 className="text-xl font-bold tracking-tight">Sabores con IA</h1>
@@ -134,30 +134,30 @@ export default function RecipeDetail() {
           <nav className="hidden md:flex gap-4">
             {user ? (
               <>
-                <Link to="/favorites" className="hover:text-amber-300 transition">❤️ Favoritos</Link>
-                <Link to="/dashboard" className="hover:text-amber-300 transition">Dashboard</Link>
+                <Link to="/favorites" className="hover:text-indigo-300 transition">❤️ Favoritos</Link>
+                <Link to="/dashboard" className="hover:text-indigo-300 transition">Dashboard</Link>
               </>
             ) : (
-              <Link to="/login" className="hover:text-amber-300 transition">Iniciar Sesión</Link>
+              <Link to="/login" className="hover:text-indigo-300 transition">Iniciar Sesión</Link>
             )}
           </nav>
         </div>
 
         {menuOpen && (
-          <div className="md:hidden border-t border-amber-700/50">
+          <div className="md:hidden border-t border-indigo-700/50">
             <div className="max-w-4xl mx-auto px-4 py-3 flex flex-col gap-2">
               {user ? (
                 <>
                   <Link
                     to="/favorites"
-                    className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                    className="block px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
                     onClick={() => setMenuOpen(false)}
                   >
                     ❤️ Favoritos
                   </Link>
                   <Link
                     to="/dashboard"
-                    className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                    className="block px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
                     onClick={() => setMenuOpen(false)}
                   >
                     Dashboard
@@ -166,7 +166,7 @@ export default function RecipeDetail() {
               ) : (
                 <Link
                   to="/login"
-                  className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition"
+                  className="block px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
                   onClick={() => setMenuOpen(false)}
                 >
                   Iniciar Sesión
@@ -178,24 +178,24 @@ export default function RecipeDetail() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <Link to="/" className="text-amber-600 hover:text-amber-500 mb-4 inline-block">← Volver</Link>
+        <Link to="/" className="text-indigo-600 hover:text-indigo-500 mb-4 inline-block">← Volver</Link>
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           {recipe.imageUrl ? (
             <img src={recipe.imageUrl} alt={recipe.name} className="w-full h-48 sm:h-64 object-cover" />
           ) : (
-            <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-7xl">
+            <div className="w-full h-48 sm:h-64 bg-gradient-to-br from-indigo-400 to-gray-500 flex items-center justify-center text-7xl">
               🍸
             </div>
           )}
           <div className="p-8">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-amber-600 bg-amber-100 px-3 py-1 rounded-full">
+                <span className="text-sm font-medium text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full">
                   {recipe.Category?.name}
                 </span>
                 {recipe.averageRating > 0 && (
-                  <span className="text-amber-600 font-medium">★ {recipe.averageRating.toFixed(1)}</span>
+                  <span className="text-indigo-600 font-medium">★ {recipe.averageRating.toFixed(1)}</span>
                 )}
               </div>
               {user && (
@@ -254,7 +254,7 @@ export default function RecipeDetail() {
                           key={n}
                           type="button"
                           onClick={() => setScore(n)}
-                          className={`text-2xl transition ${n <= score ? 'text-amber-500' : 'text-gray-300 hover:text-amber-300'}`}
+                          className={`text-2xl transition ${n <= score ? 'text-indigo-500' : 'text-gray-300 hover:text-indigo-300'}`}
                         >
                           ★
                         </button>
@@ -265,12 +265,12 @@ export default function RecipeDetail() {
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     placeholder="Comentario (opcional)"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
                     rows={3}
                   />
                   <button
                     type="submit"
-                    className="bg-amber-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-amber-500 transition"
+                    className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-500 transition"
                   >
                     Enviar Calificación
                   </button>
@@ -285,10 +285,10 @@ export default function RecipeDetail() {
                 </h2>
                 <div className="space-y-4">
                   {recipe.Ratings.map((r) => (
-                    <div key={r.id} className="bg-amber-50 rounded-lg p-4">
+                    <div key={r.id} className="bg-indigo-50 rounded-lg p-4">
                       <div className="flex items-center justify-between">
                         <span className="font-medium text-gray-800">{r.User?.name}</span>
-                        <span className="text-amber-600">{'★'.repeat(r.score)}{'☆'.repeat(5 - r.score)}</span>
+                        <span className="text-indigo-600">{'★'.repeat(r.score)}{'☆'.repeat(5 - r.score)}</span>
                       </div>
                       {r.comment && <p className="text-gray-600 mt-1 text-sm">{r.comment}</p>}
                       <p className="text-xs text-gray-400 mt-1">

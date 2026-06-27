@@ -30,13 +30,13 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-gray-100 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <Link to="/" className="flex items-center justify-center gap-3 mb-6 group">
-          <div className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
+          <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
             🍸
           </div>
-          <h1 className="text-2xl font-bold text-amber-900">Sabores con IA</h1>
+          <h1 className="text-2xl font-bold text-indigo-900">Sabores con IA</h1>
         </Link>
 
         <div className="text-center mb-8">
@@ -54,7 +54,7 @@ export default function Login() {
             <input
               type="email"
               {...register('email', { required: 'El email es obligatorio' })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
               placeholder="owner@bar.com"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
@@ -64,14 +64,14 @@ export default function Login() {
             <input
               type="password"
               {...register('password', { required: 'La contraseña es obligatoria' })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
           </div>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-amber-600 text-white py-2 rounded-lg font-semibold hover:bg-amber-500 transition disabled:opacity-50"
+            className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-500 transition disabled:opacity-50"
           >
             {isSubmitting ? 'Entrando...' : 'Entrar'}
           </button>
@@ -79,7 +79,7 @@ export default function Login() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           ¿No tienes cuenta?{' '}
-          <Link to="/register" className="text-amber-600 hover:text-amber-500 font-medium">
+          <Link to="/register" className="text-indigo-600 hover:text-indigo-500 font-medium">
             Registrarse
           </Link>
         </p>

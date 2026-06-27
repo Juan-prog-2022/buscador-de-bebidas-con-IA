@@ -12,14 +12,14 @@ export default function Landing() {
 
   return (
     <>
-      <h2 className="text-3xl font-bold text-amber-900 mb-8 text-center">
+      <h2 className="text-3xl font-bold text-indigo-900 mb-8 text-center">
         Recetas Destacadas
       </h2>
 
       {loading ? (
-        <div className="text-center text-amber-700">Cargando...</div>
+        <div className="text-center text-indigo-700">Cargando...</div>
       ) : recipes.length === 0 ? (
-        <div className="text-center text-amber-700">
+        <div className="text-center text-indigo-700">
           No hay recetas disponibles aún. ¡Regístrate como propietario para añadir las primeras!
         </div>
       ) : (
@@ -41,14 +41,14 @@ export default function Landing() {
                     if (parent) {
                       const emoji = document.createElement('div')
                       emoji.className =
-                        'w-full h-52 flex items-center justify-center text-6xl bg-gradient-to-br from-amber-100 to-orange-200'
+                        'w-full h-52 flex items-center justify-center text-6xl bg-gradient-to-br from-indigo-100 to-gray-200'
                       emoji.textContent = getEmoji(recipe.Category?.type)
                       parent.appendChild(emoji)
                     }
                   }}
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="text-xs font-medium text-amber-700 bg-white/90 backdrop-blur px-3 py-1 rounded-full shadow">
+                  <span className="text-xs font-medium text-indigo-700 bg-white/90 backdrop-blur px-3 py-1 rounded-full shadow">
                     {recipe.Category?.name}
                   </span>
                 </div>
@@ -65,7 +65,7 @@ export default function Landing() {
                       <span className="text-red-400">❤️ {recipe.favoriteCount}</span>
                     )}
                     {recipe.averageRating > 0 && (
-                      <span className="text-amber-600 font-medium">
+                      <span className="text-indigo-600 font-medium">
                         ★ {recipe.averageRating.toFixed(1)}
                       </span>
                     )}
@@ -74,7 +74,7 @@ export default function Landing() {
 
                 <button
                   onClick={() => openModal(recipe)}
-                  className="mt-4 w-full bg-amber-600 text-white py-2.5 rounded-lg font-medium hover:bg-amber-500 transition flex items-center justify-center gap-2"
+                  className="mt-4 w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-500 transition flex items-center justify-center gap-2"
                 >
                   <span>📖</span> Ver Receta
                 </button>

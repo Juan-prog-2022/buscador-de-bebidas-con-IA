@@ -200,16 +200,16 @@ export default function Dashboard() {
   if (!user) return null
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-100">
-      <header className="bg-gradient-to-r from-amber-900 to-amber-800 text-white shadow-lg">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-gray-100">
+      <header className="bg-gradient-to-r from-indigo-900 to-indigo-800 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
+            <div className="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">
               🍸
             </div>
             <div>
               <h1 className="text-xl font-bold tracking-tight">Sabores con IA</h1>
-              <p className="text-xs text-amber-300 -mt-1">Dashboard</p>
+              <p className="text-xs text-indigo-300 -mt-1">Dashboard</p>
             </div>
           </Link>
 
@@ -224,11 +224,11 @@ export default function Dashboard() {
           </button>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/favorites" className="hover:text-amber-300 transition text-sm">❤️ Favoritos</Link>
+            <Link to="/favorites" className="hover:text-indigo-300 transition text-sm">❤️ Favoritos</Link>
             <span className="text-sm">{user.name}</span>
             <button
               onClick={handleLogout}
-              className="bg-amber-700 px-4 py-2 rounded-lg hover:bg-amber-600 transition text-sm"
+              className="bg-indigo-700 px-4 py-2 rounded-lg hover:bg-indigo-600 transition text-sm"
             >
               Cerrar Sesión
             </button>
@@ -236,19 +236,19 @@ export default function Dashboard() {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden border-t border-amber-700/50">
+          <div className="md:hidden border-t border-indigo-700/50">
             <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-2">
-              <span className="px-4 py-1 text-xs text-amber-300">{user.name}</span>
+              <span className="px-4 py-1 text-xs text-indigo-300">{user.name}</span>
               <Link
                 to="/favorites"
-                className="block px-4 py-2 rounded-lg hover:bg-amber-700 transition text-sm"
+                className="block px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm"
                 onClick={() => setMenuOpen(false)}
               >
                 ❤️ Favoritos
               </Link>
               <button
                 onClick={() => { handleLogout(); setMenuOpen(false) }}
-                className="block w-full text-left px-4 py-2 rounded-lg bg-amber-700 hover:bg-amber-600 transition text-sm"
+                className="block w-full text-left px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 transition text-sm"
               >
                 Cerrar Sesión
               </button>
@@ -269,12 +269,12 @@ export default function Dashboard() {
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
               placeholder="Ej: un cóctel tropical sin alcohol para el verano"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
             />
             <select
               value={aiType}
               onChange={(e) => setAiType(e.target.value as any)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
             >
               <option value="drink">Bebidas</option>
               <option value="dessert">Postres</option>
@@ -283,7 +283,7 @@ export default function Dashboard() {
             <button
               onClick={handleAiRecommend}
               disabled={aiLoading}
-              className="bg-gradient-to-r from-amber-600 to-orange-500 text-white px-6 py-2 rounded-lg font-medium hover:from-amber-500 hover:to-orange-400 transition disabled:opacity-50"
+              className="bg-gradient-to-r from-indigo-600 to-gray-500 text-white px-6 py-2 rounded-lg font-medium hover:from-indigo-500 hover:to-gray-400 transition disabled:opacity-50"
             >
               {aiLoading ? 'Pensando...' : 'Recomendar'}
             </button>
@@ -294,7 +294,7 @@ export default function Dashboard() {
           {aiResults.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {aiResults.map((item, i) => (
-                <div key={i} className="border border-amber-200 rounded-xl p-4 bg-amber-50">
+                <div key={i} className="border border-indigo-200 rounded-xl p-4 bg-indigo-50">
                   <h4 className="font-semibold text-gray-800">{item.name}</h4>
                   <p className="text-sm text-gray-600 mt-1">{item.description}</p>
                   {item.ingredients && (
@@ -309,7 +309,7 @@ export default function Dashboard() {
                   )}
                   <button
                     onClick={() => addAiResultAsRecipe(item)}
-                    className="mt-3 text-sm bg-amber-600 text-white px-3 py-1 rounded-lg hover:bg-amber-500 transition"
+                    className="mt-3 text-sm bg-indigo-600 text-white px-3 py-1 rounded-lg hover:bg-indigo-500 transition"
                   >
                     + Añadir receta
                   </button>
@@ -324,14 +324,14 @@ export default function Dashboard() {
             <h2 className="text-2xl font-bold text-gray-800">Mis Recetas</h2>
             <button
               onClick={() => { resetForm(); setShowForm(true) }}
-              className="bg-amber-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-amber-500 transition"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-500 transition"
             >
               + Nueva Receta
             </button>
           </div>
 
           {showForm && (
-            <form onSubmit={handleSubmit(onSubmit)} className="bg-amber-50 rounded-xl p-6 mb-6 space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-indigo-50 rounded-xl p-6 mb-6 space-y-4">
               <h3 className="text-lg font-semibold text-gray-800">
                 {editing ? 'Editar Receta' : 'Nueva Receta'}
               </h3>
@@ -343,7 +343,7 @@ export default function Dashboard() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                   <input
                     {...register('name', { required: 'El nombre es obligatorio' })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                 </div>
@@ -351,7 +351,7 @@ export default function Dashboard() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
                   <select
                     {...register('categoryId', { required: 'Selecciona una categoría' })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                   >
                     <option value="">Seleccionar...</option>
                     {categories.map((cat) => (
@@ -365,7 +365,7 @@ export default function Dashboard() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
                 <textarea
                   {...register('description')}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
                   rows={2}
                 />
               </div>
@@ -375,7 +375,7 @@ export default function Dashboard() {
                 </label>
                 <textarea
                   {...register('ingredients', { required: 'Los ingredientes son obligatorios' })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
                   rows={4}
                   placeholder="50ml Tequila&#10;30ml Jugo de limón&#10;Hielo"
                 />
@@ -385,7 +385,7 @@ export default function Dashboard() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Instrucciones</label>
                 <textarea
                   {...register('instructions', { required: 'Las instrucciones son obligatorias' })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
                   rows={4}
                 />
                 {errors.instructions && <p className="text-red-500 text-xs mt-1">{errors.instructions.message}</p>}
@@ -395,13 +395,13 @@ export default function Dashboard() {
                 <input
                   {...register('imageUrl')}
                   type="url"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
                 />
               </div>
               <div className="flex gap-3">
                 <button
                   type="submit"
-                  className="bg-amber-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-amber-500 transition"
+                  className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-500 transition"
                 >
                   {editing ? 'Actualizar' : 'Crear Receta'}
                 </button>
@@ -432,14 +432,14 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {recipes.map((recipe: any) => (
-                      <tr key={recipe.id} className="border-b border-gray-100 hover:bg-amber-50">
+                      <tr key={recipe.id} className="border-b border-gray-100 hover:bg-indigo-50">
                         <td className="py-3">
-                          <Link to={`/recipes/${recipe.id}`} className="text-amber-700 hover:text-amber-500 font-medium">
+                          <Link to={`/recipes/${recipe.id}`} className="text-indigo-700 hover:text-indigo-500 font-medium">
                             {recipe.name}
                           </Link>
                         </td>
                         <td className="py-3 text-gray-600">{recipe.Category?.name}</td>
-                        <td className="py-3 text-amber-600">
+                        <td className="py-3 text-indigo-600">
                           {recipe.averageRating > 0 ? `★ ${recipe.averageRating.toFixed(1)}` : 'Sin rating'}
                         </td>
                         <td className="py-3">
@@ -477,15 +477,15 @@ export default function Dashboard() {
 
               <div className="md:hidden space-y-3">
                 {recipes.map((recipe: any) => (
-                  <div key={recipe.id} className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                  <div key={recipe.id} className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <Link to={`/recipes/${recipe.id}`} className="text-amber-700 hover:text-amber-500 font-semibold">
+                        <Link to={`/recipes/${recipe.id}`} className="text-indigo-700 hover:text-indigo-500 font-semibold">
                           {recipe.name}
                         </Link>
                         <p className="text-xs text-gray-500">{recipe.Category?.name}</p>
                       </div>
-                      <span className="text-amber-600 text-xs">
+                      <span className="text-indigo-600 text-xs">
                         {recipe.averageRating > 0 ? `★ ${recipe.averageRating.toFixed(1)}` : 'Sin rating'}
                       </span>
                     </div>
