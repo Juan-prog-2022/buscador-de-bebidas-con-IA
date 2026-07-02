@@ -9,3 +9,15 @@ export function getEmoji(type: string) {
     default: return '🍽️'
   }
 }
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2,
+  }).format(amount)
+}
+
+export function formatProfitMargin(margin: number) {
+  return `${margin.toFixed(1)}%`
+}

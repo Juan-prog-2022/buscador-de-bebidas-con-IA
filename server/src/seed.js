@@ -6,6 +6,7 @@ import { User } from './models/User.js'
 import { Category } from './models/Category.js'
 import { Recipe } from './models/Recipe.js'
 import { Rating } from './models/Rating.js'
+import { Ingredient, RecipeIngredient } from './models/index.js'
 import './models/index.js'
 
 dotenv.config()
@@ -44,7 +45,23 @@ async function seed() {
   ])
   console.log(pc.green('✓'), pc.bold(`${categories.length} categories created`))
 
-  await Recipe.bulkCreate([
+  const ingredients = await Ingredient.bulkCreate([
+    { name: 'Tequila blanco', unit: 'ml', unitPrice: 0.08, category: 'Licores', userId: owner.id },
+    { name: 'Jugo de limón fresco', unit: 'ml', unitPrice: 0.03, category: 'Jugos', userId: owner.id },
+    { name: 'Triple sec', unit: 'ml', unitPrice: 0.12, category: 'Licores', userId: owner.id },
+    { name: 'Ron blanco', unit: 'ml', unitPrice: 0.07, category: 'Licores', userId: owner.id },
+    { name: 'Menta fresca', unit: 'hojas', unitPrice: 0.05, category: 'Hierbas', userId: owner.id },
+    { name: 'Azúcar', unit: 'g', unitPrice: 0.002, category: 'Básicos', userId: owner.id },
+    { name: 'Agua con gas', unit: 'ml', unitPrice: 0.005, category: 'Bebidas', userId: owner.id },
+    { name: 'Mascarpone', unit: 'g', unitPrice: 0.03, category: 'Lácteos', userId: owner.id },
+    { name: 'Huevos', unit: 'uds', unitPrice: 0.15, category: 'Básicos', userId: owner.id },
+    { name: 'Café fuerte', unit: 'ml', unitPrice: 0.02, category: 'Bebidas', userId: owner.id },
+    { name: 'Bizcochos de soletilla', unit: 'g', unitPrice: 0.025, category: 'Básicos', userId: owner.id },
+    { name: 'Cacao en polvo', unit: 'g', unitPrice: 0.04, category: 'Básicos', userId: owner.id },
+  ])
+  console.log(pc.green('✓'), pc.bold(`${ingredients.length} ingredients created`))
+
+  const recipes = await Recipe.bulkCreate([
     {
       name: 'Margarita Clásica',
       description: 'El cóctel mexicano por excelencia, equilibrado y refrescante',
@@ -53,6 +70,10 @@ async function seed() {
       categoryId: categories[0].id,
       userId: owner.id,
       imageUrl: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&h=300&fit=crop',
+      costPrice: 8.10,
+      suggestedPrice: 20.25,
+      profitMargin: 60,
+      laborCost: 2.00,
     },
     {
       name: 'Mojito Cubano',
@@ -62,6 +83,10 @@ async function seed() {
       categoryId: categories[0].id,
       userId: owner.id,
       imageUrl: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&h=300&fit=crop',
+      costPrice: 6.35,
+      suggestedPrice: 17.50,
+      profitMargin: 63.7,
+      laborCost: 2.50,
     },
     {
       name: 'Tiramisú Clásico',
@@ -71,9 +96,31 @@ async function seed() {
       categoryId: categories[6].id,
       userId: owner.id,
       imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
+      costPrice: 28.50,
+      suggestedPrice: 72.00,
+      profitMargin: 60.4,
+      laborCost: 5.00,
     },
   ])
-  console.log(pc.green('✓'), pc.bold(`3 recipes created`))
+  console.log(pc.green('✓'), pc.bold(`${recipes.length} recipes created`))
+
+  await RecipeIngredient.bulkCreate([
+    { recipeId: recipes[0].id, ingredientId: ingredients[0].id, quantity: 50 },
+    { recipeId: recipes[0].id, ingredientId: ingredients[1].id, quantity: 30 },
+    { recipeId: recipes[0].id, ingredientId: ingredients[2].id, quantity: 20 },
+    { recipeId: recipes[1].id, ingredientId: ingredients[3].id, quantity: 50 },
+    { recipeId: recipes[1].id, ingredientId: ingredients[4].id, quantity: 12 },
+    { recipeId: recipes[1].id, ingredientId: ingredients[1].id, quantity: 30 },
+    { recipeId: recipes[1].id, ingredientId: ingredients[5].id, quantity: 20 },
+    { recipeId: recipes[1].id, ingredientId: ingredients[6].id, quantity: 100 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[7].id, quantity: 500 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[8].id, quantity: 4 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[5].id, quantity: 100 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[9].id, quantity: 300 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[10].id, quantity: 200 },
+    { recipeId: recipes[2].id, ingredientId: ingredients[11].id, quantity: 20 },
+  ])
+  console.log(pc.green('✓'), pc.bold(`Recipe-Ingredient links created`))
 
   console.log(pc.cyan('━'.repeat(40)))
   console.log(pc.green('✓'), pc.bold(pc.green('Database seeded successfully!')))

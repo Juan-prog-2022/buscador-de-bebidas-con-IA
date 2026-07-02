@@ -10,6 +10,12 @@ import aiRoutes from './routes/ai.js'
 import categoryRoutes from './routes/categories.js'
 import favoriteRoutes from './routes/favorites.js'
 import imageRoutes from './routes/images.js'
+import ingredientRoutes from './routes/ingredients.js'
+import collectionRoutes from './routes/collections.js'
+import inventoryRoutes from './routes/inventory.js'
+import analyticsRoutes from './routes/analytics.js'
+import menuRoutes from './routes/menu.js'
+import recommendationRoutes from './routes/recommendations.js'
 import './models/index.js'
 import { requestLogger } from './middleware/logger.js'
 
@@ -29,6 +35,12 @@ app.use('/api/ai', aiRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/favorites', favoriteRoutes)
 app.use('/api/images', imageRoutes)
+app.use('/api/ingredients', ingredientRoutes)
+app.use('/api/collections', collectionRoutes)
+app.use('/api/inventory', inventoryRoutes)
+app.use('/api/analytics', analyticsRoutes)
+app.use('/api/menu', menuRoutes)
+app.use('/api/recommendations', recommendationRoutes)
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })

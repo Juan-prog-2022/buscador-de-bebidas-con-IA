@@ -10,6 +10,16 @@ export interface Recipe {
   imageUrl: string
   averageRating: number
   favoriteCount: number
+  costPrice: number
+  suggestedPrice: number
+  profitMargin: number
+  laborCost: number
+  RecipeIngredients?: {
+    id: string
+    ingredientId: string
+    quantity: number
+    Ingredient: { id: string; name: string; unit: string; unitPrice: number }
+  }[]
   Category: { id: string; name: string; type: string }
   User: { id: string; name: string }
 }
@@ -19,7 +29,7 @@ interface RecipeStore {
   loading: boolean
   modalRecipe: Recipe | null
   modalOpen: boolean
-  fetchRecipes: () => Promise<void>
+  fetchRecipes: (params?: { search?: string; category?: string }) => Promise<void>
   openModal: (recipe: Recipe) => void
   closeModal: () => void
 }
@@ -29,10 +39,10 @@ export const useRecipeStore = create<RecipeStore>((set) => ({
   loading: false,
   modalRecipe: null,
   modalOpen: false,
-  fetchRecipes: async () => {
+  fetchRecipes: async (params) => {
     set({ loading: true })
     try {
-      const res = await api.get('/recipes')
+      const res = await api.get('/recipes', { params })
       set({ recipes: res.data, loading: false })
     } catch {
       set({ loading: false })
